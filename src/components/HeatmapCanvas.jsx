@@ -1,6 +1,8 @@
 
+
 import React, { useRef, useState } from 'react';
 import './HeatmapCanvas.css';
+import HeatmapView from './HeatmapView';
 
 export default function HeatmapCanvas({ onJsonChange, clearSignal }) {
     const [jsonContent, setJsonContent] = useState(null);
@@ -19,6 +21,7 @@ export default function HeatmapCanvas({ onJsonChange, clearSignal }) {
     }, [clearSignal]);
 
     const handleDrop = (e) => {
+        if (jsonContent) return;
         e.preventDefault();
         setDragActive(false);
         const file = e.dataTransfer.files[0];
@@ -39,15 +42,18 @@ export default function HeatmapCanvas({ onJsonChange, clearSignal }) {
     };
 
     const handleDragOver = (e) => {
+        if (jsonContent) return;
         e.preventDefault();
         setDragActive(true);
     };
 
     const handleDragLeave = () => {
+        if (jsonContent) return;
         setDragActive(false);
     };
 
     const handleFileChange = (e) => {
+        if (jsonContent) return;
         const file = e.target.files[0];
         if (file && file.type === 'application/json') {
             const reader = new FileReader();
@@ -71,9 +77,11 @@ export default function HeatmapCanvas({ onJsonChange, clearSignal }) {
             onDrop={handleDrop}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
-            onClick={() => fileInputRef.current && fileInputRef.current.click()}
+            onClick={() => {
+                if (!jsonContent && fileInputRef.current) fileInputRef.current.click();
+            }}
             tabIndex={0}
-            style={{ cursor: 'pointer', position: 'relative', overflow: 'hidden' }}
+            style={{ cursor: jsonContent ? 'default' : 'pointer', position: 'relative', overflow: 'hidden' }}
         >
             <input
                 type="file"
@@ -81,18 +89,18 @@ export default function HeatmapCanvas({ onJsonChange, clearSignal }) {
                 style={{ display: 'none' }}
                 ref={fileInputRef}
                 onChange={handleFileChange}
+                disabled={!!jsonContent}
             />
-            <canvas id="heatmap-canvas" className="heatmap-canvas" />
-            {!jsonContent && (
-                <div className="canvas-hint-text">
-                    <span>Drop a JSON file here or click to select.</span>
-                </div>
-            )}
-            {jsonContent && (
-                <pre className="canvas-json-content">
-                    {JSON.stringify(jsonContent, null, 2)}
-                </pre>
-            )}
+            <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+                {!jsonContent && (
+                    <div className="canvas-hint-text">
+                        <span>Drop a JSON file here or click to select.</span>
+                    </div>
+                )}
+                {jsonContent && (
+                    <HeatmapView json={jsonContent} />
+                )}
+            </div>
         </div>
     );
 }
