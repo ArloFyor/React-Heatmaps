@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapContainer, TileLayer } from 'react-leaflet';
+import { MapContainer, TileLayer, Circle } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
 // Heatmap overlay using leaflet-heatmap (or similar)
@@ -37,13 +37,11 @@ export default function HeatmapView({ json }) {
                 attribution="&copy; OpenStreetMap contributors"
             />
             {points.map((pt, idx) => (
-                <circle
+                <Circle
                     key={idx}
                     center={[pt.lat, pt.lng]}
                     radius={Math.max(10, pt.intensity * 2)}
-                    fillColor="red"
-                    fillOpacity={0.4}
-                    stroke={false}
+                    pathOptions={{ fillColor: 'red', fillOpacity: 0.4, color: 'red', weight: 0 }}
                 />
             ))}
         </MapContainer>
