@@ -2,10 +2,21 @@
 import React, { useRef, useState } from 'react';
 import './HeatmapCanvas.css';
 
-export default function HeatmapCanvas() {
+export default function HeatmapCanvas({ onJsonChange, clearSignal }) {
     const [jsonContent, setJsonContent] = useState(null);
     const [dragActive, setDragActive] = useState(false);
     const fileInputRef = useRef();
+    // Notify parent when JSON is present or cleared
+    React.useEffect(() => {
+        if (onJsonChange) {
+            onJsonChange(!!jsonContent);
+        }
+    }, [jsonContent, onJsonChange]);
+
+    // Clear canvas when clearSignal changes
+    React.useEffect(() => {
+        setJsonContent(null);
+    }, [clearSignal]);
 
     const handleDrop = (e) => {
         e.preventDefault();
