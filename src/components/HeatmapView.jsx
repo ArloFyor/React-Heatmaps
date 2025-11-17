@@ -30,8 +30,7 @@ export default function HeatmapView({ json }) {
             const heatLayer = L.heatLayer(points, {
                 radius: 12,
                 blur: 15,
-                maxZoom: 18,
-                maxOpacity: 0.8,
+                maxZoom: zoom,
                 minOpacity: 0.2,
                 max: maxIntensity,
                 gradient: {
@@ -64,8 +63,16 @@ export default function HeatmapView({ json }) {
             attributionControl={false}
         >
             <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution="&copy; OpenStreetMap contributors"
+                url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+                minZoom={0}
+                maxZoom={zoom+1}
+                maxNativeZoom={zoom+1}
+                noWrap={false}
+                attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors &copy; <a href='https://carto.com/attributions'>CARTO</a>"
+                subdomains="abcd"
+                detectRetina={false}
+                tms={false}
+                opacity={1}
             />
             <HeatmapLayer points={heatPoints} />
         </MapContainer>
