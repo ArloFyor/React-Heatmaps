@@ -22,13 +22,13 @@ export default function App() {
 
   return (
     <>
+      <h1 style={{ textAlign: 'center', marginTop: '2rem', fontWeight: 600 }}>
+        Heatmap Visualizer
+      </h1>
       <HeatmapCanvas
         onJsonChange={handleJsonChange}
         clearSignal={clearSignal}
       />
-      <h1 style={{ textAlign: 'center', marginTop: '2rem', fontWeight: 600 }}>
-        Heatmap Viewer
-      </h1>
       <div style={{ textAlign: 'center', marginTop: '1rem' }}>
         <button
           onClick={handleClear}
