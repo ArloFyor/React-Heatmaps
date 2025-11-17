@@ -20,6 +20,7 @@ export default function HeatmapView({ json }) {
     function HeatmapLayer({ points }) {
         const map = useMap();
         console.log('Max Intensity:', maxIntensity);
+        console.log('Zoom', zoom)
         useEffect(() => {
             if (!map || !points || points.length === 0) return;
             if (map._heatLayer) {
@@ -28,7 +29,7 @@ export default function HeatmapView({ json }) {
 
             // Create heat layer
             const heatLayer = L.heatLayer(points, {
-                radius: 12,
+                radius: 9,
                 blur: 15,
                 maxZoom: zoom,
                 minOpacity: 0.2,
@@ -55,7 +56,7 @@ export default function HeatmapView({ json }) {
     return (
         <MapContainer
             center={center}
-            zoom={zoom}
+            zoom={zoom+1}
             style={{ width: '100%', height: '100%' }}
             scrollWheelZoom={true}
             dragging={true}
