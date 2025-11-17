@@ -4,9 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import 'leaflet.heat';
 
-// Heatmap overlay using leaflet-heatmap (or similar)
-// For demo, we use a simple overlay, but you can swap for leaflet-heatmap plugin
-
+// Heatmap overlay using leaflet-heatmap 
 export default function HeatmapView({ json }) {
     if (!json || !json.map_container_details || !json.data) return null;
 
@@ -16,8 +14,6 @@ export default function HeatmapView({ json }) {
     ];
     const zoom = Number(json.map_container_details.zoom) || 15;
     const maxIntensity = Number(json.report_details.max_intensity) || 1;
-
-    // Convert data to [lat, lng, intensity] for leaflet.heat
     const heatPoints = json.data.map((pt) => [pt[0], pt[1], pt[2]]);
 
     // Custom Heatmap Layer using leaflet.heat

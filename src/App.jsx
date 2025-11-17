@@ -1,18 +1,16 @@
 
 import HeatmapCanvas from './components/HeatmapCanvas';
 import './App.css';
-
-
 import React, { useState } from 'react';
 
 export default function App() {
   const [hasJson, setHasJson] = useState(false);
+  const [clearSignal, setClearSignal] = useState(0);
 
   const handleJsonChange = (present) => {
     setHasJson(present);
   };
 
-  const [clearSignal, setClearSignal] = useState(0);
   const handleClear = () => {
     if (hasJson) {
       setClearSignal((c) => c + 1);

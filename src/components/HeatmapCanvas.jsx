@@ -8,6 +8,7 @@ export default function HeatmapCanvas({ onJsonChange, clearSignal }) {
     const [jsonContent, setJsonContent] = useState(null);
     const [dragActive, setDragActive] = useState(false);
     const fileInputRef = useRef();
+    
     // Notify parent when JSON is present or cleared
     React.useEffect(() => {
         if (onJsonChange) {

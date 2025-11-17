@@ -15,9 +15,6 @@
     overflow: hidden;
 }
 
-
-/* .heatmap-canvas removed: no longer used */
-
 .canvas-hint-text {
     position: absolute;
     top: 50%;
