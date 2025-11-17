@@ -30,7 +30,7 @@ export default function HeatmapView({ json }) {
             // Create heat layer
             const heatLayer = L.heatLayer(points, {
                 radius: 9,
-                blur: 15,
+                blur: 12,
                 maxZoom: zoom,
                 minOpacity: 0.2,
                 max: maxIntensity,
